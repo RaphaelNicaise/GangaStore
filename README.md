@@ -11,3 +11,11 @@ docker-compose build
 ```bash
 docker-compose run --no-deps api rails new . --force --no-deps --api -d postgresql
 ```
+
+```bash
+docker-compose exec api bundle exec rails  db:migrate
+```
+
+```bash
+docker-compose exec api bundle exec rails db:seed
+```
