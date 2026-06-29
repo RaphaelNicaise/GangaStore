@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic"
 import { handler, ok } from "@/lib/api"
 import { SiteContentService } from "@/services/site-content.service"
 
