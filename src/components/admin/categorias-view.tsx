@@ -200,9 +200,9 @@ export function CategoriasView() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-2xl font-bold text-ink">Categorías</h1>
-        <Button onClick={() => openCreate()} className="gap-2">
+        <Button onClick={() => openCreate()} className="gap-2 self-start sm:self-auto">
           <Plus className="h-4 w-4" /> Nueva categoría
         </Button>
       </div>

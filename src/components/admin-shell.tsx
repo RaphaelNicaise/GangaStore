@@ -71,10 +71,18 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             open ? "translate-x-0" : "-translate-x-full",
           )}
         >
-          <div className="flex h-16 items-center border-b border-border px-5">
+          <div className="flex h-14 lg:h-16 items-center justify-between border-b border-border px-4 lg:px-5">
             <Link href="/admin" aria-label="Admin home" onClick={() => setOpen(false)}>
               <Logo />
             </Link>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border lg:hidden"
+              aria-label="Cerrar menú"
+            >
+              <X className="h-4 w-4" />
+            </button>
           </div>
 
           <nav className="flex-1 space-y-1 p-3" aria-label="Admin">
