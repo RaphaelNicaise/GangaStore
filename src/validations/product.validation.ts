@@ -2,14 +2,14 @@ import { z } from "zod";
 
 export const createProductSchema = z.object({
   name: z.string().min(1).max(200),
-  description: z.string().max(2000).optional(),
+  description: z.string().max(2000).nullable().optional(),
   precio_minorista: z.number().positive(),
   precio_mayorista: z.number().positive(),
   wholesale_min_qty: z.number().int().min(1).optional(),
   bulk_discount_min_qty: z.number().int().min(1).optional(),
   bulk_discount_pct: z.number().min(0).max(100).optional(),
   images: z.array(z.string()).optional().default([]),
-  brand: z.string().max(100).optional(),
+  brand: z.string().max(100).nullable().optional(),
   stock: z.number().int().min(0).optional().default(0),
   highlights: z.array(z.string()).optional().default([]),
   promotion_tipo: z.enum(["porcentaje", "fijo", "nxm"]).nullable().optional(),
