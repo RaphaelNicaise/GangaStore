@@ -1,10 +1,9 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises"
-import path from "node:path"
+import { PrismaClient } from "@prisma/client"
 import { defaultSiteContent } from "@/lib/site-content"
 import type { SiteContent } from "@/lib/types"
 import { cacheDeleteByPrefix, cacheGetJSON, cacheSetJSON } from "@/lib/cache"
 
-const siteContentFile = path.join(process.cwd(), "data", "site-content.json")
+const prisma = new PrismaClient()
 const SITE_CONTENT_CACHE_KEY = "site-content:get"
 
 function normalizeContent(content: Partial<SiteContent> | null | undefined): SiteContent {
@@ -29,20 +28,44 @@ export class SiteContentService {
     if (cached) return normalizeContent(cached)
 
     try {
-      const raw = await readFile(siteContentFile, "utf8")
-      const normalized = normalizeContent(JSON.parse(raw) as SiteContent)
+      const record = await prisma.siteContent.findUnique({ where: { id: "global" } })
+      
+      if (!record) {
+        await this.save(defaultSiteContent)
+        return defaultSiteContent
+      }
+
+      // Convert from JSON fields
+      const content: SiteContent = {
+        banners: record.banners as any,
+        sections: record.sections as any,
+      }
+
+      const normalized = normalizeContent(content)
       await cacheSetJSON(SITE_CONTENT_CACHE_KEY, normalized, 180)
       return normalized
-    } catch {
-      await this.save(defaultSiteContent)
+    } catch (e) {
+      console.error("Error reading SiteContent from DB", e)
       return defaultSiteContent
     }
   }
 
   static async save(content: SiteContent) {
     const normalized = normalizeContent(content)
-    await mkdir(path.dirname(siteContentFile), { recursive: true })
-    await writeFile(siteContentFile, JSON.stringify(normalized, null, 2), "utf8")
+    
+    await prisma.siteContent.upsert({
+      where: { id: "global" },
+      update: {
+        banners: normalized.banners as any,
+        sections: normalized.sections as any,
+      },
+      create: {
+        id: "global",
+        banners: normalized.banners as any,
+        sections: normalized.sections as any,
+      },
+    })
+
     await cacheDeleteByPrefix(SITE_CONTENT_CACHE_KEY)
     return normalized
   }

@@ -91,3 +91,12 @@ model OrderItem {
   @@map("order_items")
 }
 
+model SiteContent {
+  id        String   @id @default("global")
+  banners   Json
+  sections  Json
+  updatedAt DateTime @updatedAt
+
+  @@map("site_content")
+}
+
