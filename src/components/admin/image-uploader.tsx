@@ -4,6 +4,7 @@ import { useRef, useState } from "react"
 import { toast } from "sonner"
 import { Upload, X, ImageIcon, Loader2 } from "lucide-react"
 import Image from "next/image"
+import imageCompression from 'browser-image-compression';
 
 interface Props {
   /** URLs actuales */
@@ -31,8 +32,20 @@ export function ImageUploader({ images, onChange, max = 10, single = false }: Pr
   // ── Subir archivo ────────────────────────────────────────────────────────
 
   const uploadFile = async (file: File): Promise<string | null> => {
+    let finalFile = file;
+    try {
+      const options = {
+        maxSizeMB: 0.8,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
+      };
+      finalFile = await imageCompression(file, options) as File;
+    } catch (error) {
+      console.warn("Could not compress image:", error);
+    }
+
     const form = new FormData()
-    form.append("file", file)
+    form.append("file", finalFile)
     try {
       const res = await fetch("/api/upload", { method: "POST", body: form })
       if (!res.ok) {
