@@ -1,14 +1,20 @@
 import { NextResponse } from "next/server"
-import { writeFile, mkdir } from "fs/promises"
-import { join, extname } from "path"
 import { randomUUID } from "crypto"
+import { createClient } from "@supabase/supabase-js"
+import { extname } from "path"
 
 const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/gif"])
 const MAX_SIZE = 5 * 1024 * 1024 // 5 MB
-const UPLOAD_DIR = join(process.cwd(), "public", "uploads")
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ""
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || ""
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 export async function POST(req: Request) {
-  // Auth es chequeada por el middleware (solo admins pueden subir)
+  if (!supabaseUrl || !supabaseKey) {
+    return NextResponse.json({ error: "Faltan las variables de entorno de Supabase Storage" }, { status: 500 })
+  }
+
   let formData: FormData
   try {
     formData = await req.formData()
@@ -39,30 +45,43 @@ export async function POST(req: Request) {
   const filename = `${randomUUID()}${ext}`
 
   try {
-    await mkdir(UPLOAD_DIR, { recursive: true })
     const buffer = Buffer.from(await file.arrayBuffer())
-    await writeFile(join(UPLOAD_DIR, filename), buffer)
-  } catch {
-    return NextResponse.json({ error: "Error al guardar el archivo" }, { status: 500 })
-  }
+    
+    const { data, error } = await supabase.storage
+      .from("images")
+      .upload(filename, buffer, {
+        contentType: file.type,
+        upsert: false
+      })
 
-  return NextResponse.json({ url: `/uploads/${filename}` }, { status: 201 })
+    if (error) throw error
+
+    const { data: publicUrlData } = supabase.storage
+      .from("images")
+      .getPublicUrl(filename)
+
+    return NextResponse.json({ url: publicUrlData.publicUrl }, { status: 201 })
+  } catch (error: any) {
+    console.error("Upload error:", error)
+    return NextResponse.json({ error: "Error al subir imagen a Supabase: " + error?.message }, { status: 500 })
+  }
 }
 
 export async function DELETE(req: Request) {
   const { searchParams } = new URL(req.url)
-  const filename = searchParams.get("file")
+  const url = searchParams.get("file")
 
-  // Validar que no haya path traversal
-  if (!filename || filename.includes("/") || filename.includes("\\") || filename.includes("..")) {
-    return NextResponse.json({ error: "Nombre de archivo inválido" }, { status: 400 })
+  if (!url || !supabaseUrl || !supabaseKey) {
+    return NextResponse.json({ error: "Faltan datos" }, { status: 400 })
   }
 
   try {
-    const { unlink } = await import("fs/promises")
-    await unlink(join(UPLOAD_DIR, filename))
+    const filename = url.split("/").pop()
+    if (filename) {
+      await supabase.storage.from("images").remove([filename])
+    }
   } catch {
-    // Si no existe el archivo, igual OK
+    // Ignore deletion errors
   }
 
   return NextResponse.json({ ok: true })
