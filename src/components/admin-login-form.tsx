@@ -48,7 +48,7 @@ export function AdminLoginForm() {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="admin@termostore.com.ar"
+          placeholder="admin@gangastore.com"
           className="mt-1.5 block h-11 w-full rounded-xl border border-border bg-white px-4 text-sm focus:border-ink focus:outline-none focus:ring-2 focus:ring-[color:var(--color-pink)]"
         />
       </div>

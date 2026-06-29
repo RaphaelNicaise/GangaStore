@@ -61,7 +61,7 @@ export class OrderService {
       badRequest("Uno o más productos ya no están disponibles")
     }
 
-    const productMap = new Map(products.map((p) => [p.id, p]))
+    const productMap = new Map(products.map((p: any) => [p.id, p]))
 
     const lines = ids.map((productId) => {
       const raw = productMap.get(productId)
