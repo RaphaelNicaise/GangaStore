@@ -194,7 +194,7 @@ export class ProductService {
       await invalidateProductCache();
       return created;
     } catch {
-      return mockStore.createProduct(parsed);
+      return mockStore.createProduct(parsed as any);
     }
   }
 
@@ -221,7 +221,7 @@ export class ProductService {
       await invalidateProductCache();
       return updated;
     } catch {
-      return mockStore.updateProduct(id, parsed);
+      return mockStore.updateProduct(id, parsed as any);
     }
   }
 
