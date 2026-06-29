@@ -1,1 +1,10 @@
 .env
+.env.prod
+
+TODO.md
+TermoStore.txt
+
+.next
+node_modules/
+dist/
+tsconfig.tsbuildinfo

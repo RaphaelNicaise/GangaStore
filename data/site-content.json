@@ -1,0 +1,70 @@
+{
+  "banners": [
+    {
+      "id": "banner-uugn9duf",
+      "eyebrow": "Que calor que hace!",
+      "title": "Ventiladores en promocion!",
+      "description": "Los mejores ventiladores",
+      "href": "http://localhost:3001/catalogo?categoria=climatizacion",
+      "buttonLabel": "Ver ventiladores",
+      "imageUrl": "/uploads/27dc1d72-2309-4b2a-a582-1ba98c3a5f74.webp",
+      "mobileImageUrl": "/uploads/6dcd9cd4-9cca-4836-8373-3b2fbd32b9b0.webp",
+      "active": true,
+      "order": 1
+    },
+    {
+      "id": "banner-hero-1",
+      "eyebrow": "Especial cocina",
+      "title": "Llevate cocina y refrigeración con precio mayorista real",
+      "description": "Armá pedidos mixtos y resolvé una categoría completa en una sola compra.",
+      "href": "/catalogo?categoria=cocina",
+      "buttonLabel": "Ver cocina",
+      "imageUrl": "/uploads/ab0d5377-c498-49aa-b0ba-6193478b7384.jpg",
+      "mobileImageUrl": "/uploads/a2eaeaaa-27de-4baf-84ed-91ffbc37a1ce.jpg",
+      "active": true,
+      "order": 2
+    }
+  ],
+  "sections": [
+    {
+      "id": "section-xsjel9sd",
+      "title": "Ofertazos",
+      "description": "",
+      "source": "manual",
+      "productIds": [
+        "34301dbd-58b6-44a2-ae60-db4fc631a829",
+        "61e249a1-c341-4487-908f-f788ccd17b86",
+        "95c33f13-bf51-4644-93c4-b74bfba2e6b7",
+        "6f8b03b2-0b68-497d-b4e4-6072390467c3",
+        "0d1cc910-3d92-44dc-97bf-9fd10889880b",
+        "2b34877c-9da8-469d-b7b7-5aaa6950afc5",
+        "c261279f-7eff-4a19-bd99-9e64537ee250",
+        "1ceac086-9099-4b08-9850-60b5520072d3"
+      ],
+      "carousel": true,
+      "active": true,
+      "order": 1,
+      "limit": 8
+    },
+    {
+      "id": "section-in2he9cs",
+      "title": "",
+      "description": "",
+      "source": "manual",
+      "productIds": [
+        "34301dbd-58b6-44a2-ae60-db4fc631a829",
+        "cf1a5573-ad38-48cd-89c0-933191d7ca26",
+        "1ceac086-9099-4b08-9850-60b5520072d3",
+        "1562903b-a008-4691-9e04-60624167f4bd",
+        "0d28912e-852c-4107-a53e-f49a6da1bc07",
+        "ffbed97d-7209-463a-b9fd-494ee607051f",
+        "2b34877c-9da8-469d-b7b7-5aaa6950afc5",
+        "c261279f-7eff-4a19-bd99-9e64537ee250"
+      ],
+      "carousel": false,
+      "active": true,
+      "order": 2,
+      "limit": 8
+    }
+  ]
+}

@@ -1,21 +1,16 @@
-
-
-![Stack](https://skillicons.dev/icons?i=ruby,rails,postgres,docker)
-
-Levantar proyecto:
-
+DEV:
 ```bash
-docker-compose build
+docker compose -f infra/dev.yml --env-file .env up -d --build
 ```
 
+PROD:
 ```bash
-docker-compose run --no-deps api rails new . --force --no-deps --api -d postgresql
+docker compose --profile prod up -d --build
 ```
 
-```bash
-docker-compose exec api bundle exec rails  db:migrate
-```
-
-```bash
-docker-compose exec api bundle exec rails db:seed
-```
+/api/categories
+/api/products
+/api/users
+/api/price-profiles
+/api/special-prices
+/api/health

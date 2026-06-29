@@ -1,0 +1,161 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* shadcn-compatible tokens, mapeados a la paleta de marca */
+  --background: #ffffff;
+  --foreground: #434343;
+  --card: #ffffff;
+  --card-foreground: #434343;
+  --popover: #ffffff;
+  --popover-foreground: #434343;
+  --primary: #434343;
+  --primary-foreground: #ffffff;
+  --secondary: #d887a3;
+  --secondary-foreground: #434343;
+  --muted: #f5f5f5;
+  --muted-foreground: #6b6b6b;
+  --accent: #d887a3;
+  --accent-foreground: #434343;
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: #ffffff;
+  --border: #ececec;
+  --input: #ececec;
+  --ring: #434343;
+  --radius: 0.75rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #434343;
+  --sidebar-primary: #434343;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #d887a3;
+  --sidebar-accent-foreground: #434343;
+  --sidebar-border: #ececec;
+  --sidebar-ring: #434343;
+}
+
+.dark {
+  --background: #2b2b2b;
+  --foreground: #ffffff;
+  --card: #3a3a3a;
+  --card-foreground: #ffffff;
+  --popover: #3a3a3a;
+  --popover-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: #434343;
+  --secondary: #d887a3;
+  --secondary-foreground: #434343;
+  --muted: #3a3a3a;
+  --muted-foreground: #c0c0c0;
+  --accent: #d887a3;
+  --accent-foreground: #434343;
+  --border: #4a4a4a;
+  --input: #4a4a4a;
+  --ring: #d887a3;
+}
+
+@theme inline {
+  --font-sans: var(--font-garet), 'Outfit', system-ui, sans-serif;
+  --font-display: var(--font-norwester), 'Bebas Neue', 'Anton', sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', monospace;
+
+  /* Brand palette */
+  --color-pink: #d887a3;
+  --color-pink-soft: #e6a4bb;
+  --color-ink: #434343;
+  --color-ink-deep: #2b2b2b;
+  --color-paper: #ffffff;
+
+  /* shadcn tokens */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+  }
+}
+
+/* Diagonales */
+.clip-diagonal-tr {
+  clip-path: polygon(0 0, 100% 0, 100% 88%, 0 100%);
+}
+.clip-diagonal-bl {
+  clip-path: polygon(0 12%, 100% 0, 100% 100%, 0 100%);
+}
+.clip-diagonal-br {
+  clip-path: polygon(0 0, 100% 12%, 100% 100%, 0 88%);
+}
+
+/* Patrón de puntos */
+.dots-ink {
+  background-image: radial-gradient(#434343 1.2px, transparent 1.2px);
+  background-size: 12px 12px;
+}
+.dots-pink {
+  background-image: radial-gradient(#d887a3 1.4px, transparent 1.4px);
+  background-size: 12px 12px;
+}
+.dots-paper {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.6) 1.2px, transparent 1.2px);
+  background-size: 12px 12px;
+}
+
+/* Banda de líneas diagonales */
+.stripe-diagonal {
+  background: repeating-linear-gradient(
+    -25deg,
+    transparent 0,
+    transparent 18px,
+    #c16e8b 18px,
+    #c16e8b 22px
+  );
+}
+
+html {
+  scroll-behavior: smooth;
+}
